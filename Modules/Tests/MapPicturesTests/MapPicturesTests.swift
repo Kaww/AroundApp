@@ -1,5 +1,5 @@
 //
-//  AppTests.swift
+//  MapPicturesTests.swift
 //  Around
 //
 //  Created by KAWRANTIN on 01/02/2025.
@@ -7,9 +7,9 @@
 
 import Foundation
 import XCTest
-import App
+import MapPictures
 
-class AppTests: XCTestCase {
+class MapPicturesTests: XCTestCase {
   func testDefault() {
     XCTAssertTrue(true)
   }

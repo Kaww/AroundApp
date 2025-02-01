@@ -10,19 +10,36 @@ let package = Package(
   defaultLocalization: "en",
   platforms: [.iOS(.v18)],
   products: [
-    .library(name: "App", targets: ["App"]),
+    .library(name: "BaseApp", targets: ["BaseApp"]),
+    .library(name: "MapPictures", targets: ["MapPictures"]),
   ],
   dependencies: [],
   targets: [
-    // MARK: - App
+    // Note: Targets are sorted alphabetically like in the `Sources` and `Tests` folders.
+
+    // MARK: - Base App
     .target(
-      name: "App",
+      name: "BaseApp",
+      dependencies: [
+        "MapPictures"
+      ]
+    ),
+    .testTarget(
+      name: "BaseAppTests",
+      dependencies: [
+        "BaseApp"
+      ]
+    ),
+
+    // MARK: - Map Pictures
+    .target(
+      name: "MapPictures",
       dependencies: []
     ),
     .testTarget(
-      name: "AppTests",
+      name: "MapPicturesTests",
       dependencies: [
-        "App"
+        "MapPictures"
       ]
     )
   ]

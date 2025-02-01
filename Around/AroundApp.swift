@@ -5,14 +5,14 @@
 //  Created by KAWRANTIN on 01/02/2025.
 //
 
-import App
+import BaseApp
 import SwiftUI
 
 @main
 struct AroundApp: App {
-    var body: some Scene {
-        WindowGroup {
-            AppView()
-        }
+  var body: some Scene {
+    WindowGroup {
+      BaseAppView()
     }
+  }
 }

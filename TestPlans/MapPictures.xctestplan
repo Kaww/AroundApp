@@ -1,7 +1,7 @@
 {
   "configurations" : [
     {
-      "id" : "32CDB70D-01F7-4597-8291-044DC675D3E6",
+      "id" : "5599BCF9-0BCA-4E69-950C-07EC316E3B98",
       "name" : "Configuration 1",
       "options" : {
 
@@ -15,8 +15,8 @@
     {
       "target" : {
         "containerPath" : "container:",
-        "identifier" : "AppTests",
-        "name" : "AppTests"
+        "identifier" : "MapPicturesTests",
+        "name" : "MapPicturesTests"
       }
     }
   ],

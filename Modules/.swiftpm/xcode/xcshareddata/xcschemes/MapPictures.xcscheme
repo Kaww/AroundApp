@@ -15,9 +15,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "App"
-               BuildableName = "App"
-               BlueprintName = "App"
+               BlueprintIdentifier = "MapPictures"
+               BuildableName = "MapPictures"
+               BlueprintName = "MapPictures"
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
@@ -30,7 +30,7 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <TestPlans>
          <TestPlanReference
-            reference = "container:../TestPlans/App.xctestplan"
+            reference = "container:../TestPlans/MapPictures.xctestplan"
             default = "YES">
          </TestPlanReference>
       </TestPlans>
@@ -55,9 +55,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "App"
-            BuildableName = "App"
-            BlueprintName = "App"
+            BlueprintIdentifier = "MapPictures"
+            BuildableName = "MapPictures"
+            BlueprintName = "MapPictures"
             ReferencedContainer = "container:">
          </BuildableReference>
       </MacroExpansion>
