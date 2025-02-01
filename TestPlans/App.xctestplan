@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "32CDB70D-01F7-4597-8291-044DC675D3E6",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "AppTests",
+        "name" : "AppTests"
+      }
+    }
+  ],
+  "version" : 1
+}
