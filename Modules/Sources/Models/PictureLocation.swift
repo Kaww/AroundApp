@@ -6,13 +6,16 @@
 //
 
 import Foundation
+import MapKit
 
-public struct PictureLocation {
-  let latitude: Double
-  let longitude: Double
+public struct PictureLocation: Sendable {
+  public let latitude: Double
+  public let longitude: Double
+  public let coordinate: CLLocationCoordinate2D
 
   public init(latitude: Double, longitude: Double) {
     self.latitude = latitude
     self.longitude = longitude
+    self.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
   }
 }
