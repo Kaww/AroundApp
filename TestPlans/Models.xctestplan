@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "3E58C961-DABE-4E94-93C0-373EF030ADEB",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "ModelsTests",
+        "name" : "ModelsTests"
+      }
+    }
+  ],
+  "version" : 1
+}

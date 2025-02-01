@@ -5,6 +5,7 @@
 //  Created by KAWRANTIN on 01/02/2025.
 //
 
+import Models
 import SwiftUI
 
 public struct MapPicturesView: View {

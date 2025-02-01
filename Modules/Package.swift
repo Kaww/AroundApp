@@ -12,6 +12,7 @@ let package = Package(
   products: [
     .library(name: "BaseApp", targets: ["BaseApp"]),
     .library(name: "MapPictures", targets: ["MapPictures"]),
+    .library(name: "Models", targets: ["Models"]),
   ],
   dependencies: [],
   targets: [
@@ -34,12 +35,26 @@ let package = Package(
     // MARK: - Map Pictures
     .target(
       name: "MapPictures",
-      dependencies: []
+      dependencies: [
+        "Models"
+      ]
     ),
     .testTarget(
       name: "MapPicturesTests",
       dependencies: [
         "MapPictures"
+      ]
+    ),
+
+    // MARK: - Models
+    .target(
+      name: "Models",
+      dependencies: []
+    ),
+    .testTarget(
+      name: "ModelsTests",
+      dependencies: [
+        "Models"
       ]
     )
   ]
