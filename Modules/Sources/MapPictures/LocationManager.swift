@@ -9,12 +9,12 @@ import CoreLocation
 import Models
 import Observation
 
-@Observable class LocationManager: NSObject, CLLocationManagerDelegate {
+@Observable public class LocationManager: NSObject, CLLocationManagerDelegate {
   private let locationManager = CLLocationManager()
 
-  private(set) var location: CLLocationCoordinate2D = .paris
+  public private(set) var location: CLLocationCoordinate2D = .paris
 
-  override init() {
+  override public init() {
     super.init()
     locationManager.delegate = self
   }
@@ -23,18 +23,18 @@ import Observation
     locationManager.requestWhenInUseAuthorization()
   }
 
-  func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+  public func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
     print("LocationManager authorizationStatus -> \(manager.authorizationStatus)")
     if manager.authorizationStatus != .denied {
       locationManager.requestLocation()
     }
   }
-  func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+  public func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
     print("LocationManager updated -> \(locations)")
     location = locations.first?.coordinate ?? .paris
   }
 
-  func locationManager(_ manager: CLLocationManager, didFailWithError error: any Error) {
+  public func locationManager(_ manager: CLLocationManager, didFailWithError error: any Error) {
     print("LocationManager Error -> \(error.localizedDescription)")
   }
 }

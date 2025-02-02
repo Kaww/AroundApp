@@ -1,6 +1,6 @@
 //
 //  CLLocationCoordinate+places.swift
-//  Modules
+//  Around
 //
 //  Created by KAWRANTIN on 02/02/2025.
 //

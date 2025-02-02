@@ -24,16 +24,19 @@ public struct MapPicturesView: View {
   )
 
   @State private var isFlipped = false
+  var pictureStore: PictureStore
 
   public init(
+    pictureStore: PictureStore,
     viewingPicture: Binding<Picture?>
   ) {
+    self.pictureStore = pictureStore
     self._selection = viewingPicture
   }
 
   public var body: some View {
     Map(position: $position, bounds: MapCameraBounds(), interactionModes: [.pan, .zoom]) {
-      ForEach(Picture.famousPlaces) { picture in
+      ForEach(pictureStore.pictures) { picture in
         Annotation(coordinate: picture.location.coordinate, anchor: .bottom) {
           Button {
             selection = picture
@@ -62,7 +65,16 @@ public struct MapPicturesView: View {
         }
       }
     }
-    .mapStyle(.standard(elevation: .flat, emphasis: .automatic, pointsOfInterest: .excludingAll, showsTraffic: false))
+    .onChange(of: pictureStore.pictures, { _, newValue in
+      if let newPicture = newValue.last {
+        withAnimation {
+          self.position = .camera(
+            .init(centerCoordinate: newPicture.location.coordinate, distance: 5000)
+          )
+        }
+      }
+    })
+    .mapStyle(.standard(elevation: .flat, emphasis: .automatic, pointsOfInterest: .all, showsTraffic: false))
     .onMapCameraChange(frequency: .onEnd, { context in
       print("Camera changed -> \(context.camera.centerCoordinate)")
     })
@@ -121,7 +133,10 @@ private struct PreviewView: View {
   @State private var viewingPicture: Picture? = nil
 
   var body: some View {
-    MapPicturesView(viewingPicture: $viewingPicture)
+    MapPicturesView(
+      pictureStore: PictureStore(pictures: Picture.famousPlaces),
+      viewingPicture: $viewingPicture
+    )
   }
 }
 
