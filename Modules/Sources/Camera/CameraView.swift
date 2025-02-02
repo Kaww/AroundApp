@@ -11,10 +11,13 @@ public struct CameraView: View {
 
   @State private var camera = CameraCapture()
   @State private var capturedPicture: CGImage?
+  @State private var isCameraPresented: Bool = false
 
-  @State private var isHidden: Bool = true
+  let didChoosePhoto: (CGImage) -> Void
 
-  public init() {}
+  public init(didChoosePhoto: @escaping (CGImage) -> Void) {
+    self.didChoosePhoto = didChoosePhoto
+  }
 
   public var body: some View {
     GeometryReader { proxy in
@@ -23,10 +26,20 @@ public struct CameraView: View {
 
         CapturedPictureView(
           capturedPicture: $capturedPicture,
-          availableSize: proxy.size
+          availableSize: proxy.size,
+          didChoosePhoto: {
+            if let photo = capturedPicture {
+              Task {
+                capturedPicture = nil
+                try? await Task.sleep(for: .seconds(0.2))
+                isCameraPresented = false
+                try? await Task.sleep(for: .seconds(0.4))
+                didChoosePhoto(photo)
+              }
+            }
+          }
         )
       }
-//        .animation(.spring(response: 0.4, dampingFraction: 0.6), value: capturedPicture)
     }
   }
 
@@ -47,8 +60,9 @@ public struct CameraView: View {
       }
       .padding(20)
       .drawingGroup()
-      .offset(y: isHidden ? availableSize.height - 30 : 0)
-      .animation(.spring(response: 0.4, dampingFraction: 0.6), value: isHidden)
+      .scaleEffect(isCameraPresented ? 1 : 0.8, anchor: .top)
+      .offset(y: isCameraPresented ? 0 : availableSize.height - 30)
+      .animation(.spring(response: 0.4, dampingFraction: 0.6), value: isCameraPresented)
   }
 
   private var cameraEye: some View {
@@ -68,7 +82,7 @@ public struct CameraView: View {
 
   private var closeButton: some View {
     Button(action: {
-      isHidden = true
+      isCameraPresented = false
       Task {
         camera.stopCapture()
       }
@@ -100,7 +114,7 @@ public struct CameraView: View {
 
   private var grabIndicator: some View {
     Button(action: {
-      isHidden = false
+      isCameraPresented = true
       Task {
         await camera.startCapture()
       }
@@ -120,5 +134,5 @@ public struct CameraView: View {
 }
 
 #Preview {
-  CameraView()
+  CameraView(didChoosePhoto: { _ in })
 }

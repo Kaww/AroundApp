@@ -24,7 +24,8 @@ let package = Package(
       name: "BaseApp",
       dependencies: [
         "Camera",
-        "MapPictures"
+        "MapPictures",
+        "Models"
       ]
     ),
     .testTarget(

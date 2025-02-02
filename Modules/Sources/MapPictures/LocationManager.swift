@@ -6,6 +6,7 @@
 //
 
 import CoreLocation
+import Models
 import Observation
 
 @Observable class LocationManager: NSObject, CLLocationManagerDelegate {
@@ -36,12 +37,6 @@ import Observation
   func locationManager(_ manager: CLLocationManager, didFailWithError error: any Error) {
     print("LocationManager Error -> \(error.localizedDescription)")
   }
-}
-
-
-extension CLLocationCoordinate2D {
-  static let paris: Self = .init(latitude: 48.863777131154535, longitude: 2.3344758274435584)
-  static let home: Self = .init(latitude: 48.83301946969535, longitude: 2.2378371167000943)
 }
 
 extension CLLocationCoordinate2D: @retroactive Equatable {

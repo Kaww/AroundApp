@@ -9,9 +9,9 @@ import Models
 import SwiftUI
 
 struct CapturedPictureView: View {
-//  @Namespace private var profileName
   @Binding var capturedPicture: CGImage?
   let availableSize: CGSize
+  let didChoosePhoto: () -> Void
 
   var body: some View {
     ZStack {
@@ -76,7 +76,7 @@ struct CapturedPictureView: View {
   }
 
   private var validateButton: some View {
-    Button(action: {}) {
+    Button(action: didChoosePhoto) {
       Circle()
         .fill(Color.green)
         .frame(width: 50, height: 50)
@@ -110,7 +110,11 @@ private struct PreviewView: View {
           .font(.title)
         }
 
-        CapturedPictureView(capturedPicture: $capturedPicture, availableSize: proxy.size)
+        CapturedPictureView(
+          capturedPicture: $capturedPicture,
+          availableSize: proxy.size,
+          didChoosePhoto: { capturedPicture = nil }
+        )
       }
     }
   }
