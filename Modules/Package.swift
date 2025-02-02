@@ -37,7 +37,9 @@ let package = Package(
     // MARK: - Camera
     .target(
       name: "Camera",
-      dependencies: []
+      dependencies: [
+        "Models"
+      ]
     ),
     .testTarget(
       name: "CameraTests",

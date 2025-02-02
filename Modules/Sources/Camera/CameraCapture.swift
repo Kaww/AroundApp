@@ -21,7 +21,7 @@ import Foundation
   private var _currentCameraFrame: CGImage?
   public var currentCameraFrame: CGImage? {
     get {
-      frameQueue.sync { _currentCameraFrame ?? .blackImage }
+      frameQueue.sync { _currentCameraFrame }
     }
     set {
       frameQueue.sync { _currentCameraFrame = newValue }

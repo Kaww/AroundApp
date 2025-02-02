@@ -18,28 +18,43 @@ public struct CameraView: View {
 
   public var body: some View {
     GeometryReader { proxy in
-        RoundedRectangle(cornerRadius: 16, style: .continuous)
-          .fill(.gray)
-          .overlay {
-            cameraEye
-          }
-          .overlay(alignment: .bottomTrailing) {
-            closeButton
-          }
-          .overlay(alignment: .top) {
-            grabIndicator
-          }
-          .padding(20)
-          .drawingGroup()
-          .offset(y: isHidden ? proxy.size.height - 30 : 0)
-          .animation(.spring(response: 0.4, dampingFraction: 0.6), value: isHidden)
+      ZStack {
+        cameraView(availableSize: proxy.size)
+
+        CapturedPictureView(
+          capturedPicture: $capturedPicture,
+          availableSize: proxy.size
+        )
+      }
+//        .animation(.spring(response: 0.4, dampingFraction: 0.6), value: capturedPicture)
     }
+  }
+
+  private func cameraView(availableSize: CGSize) -> some View {
+    RoundedRectangle(cornerRadius: 16, style: .continuous)
+      .fill(.gray)
+      .overlay {
+        cameraEye
+      }
+      .overlay(alignment: .bottomTrailing) {
+        closeButton
+      }
+      .overlay(alignment: .bottomLeading) {
+        captureButton
+      }
+      .overlay(alignment: .top) {
+        grabIndicator
+      }
+      .padding(20)
+      .drawingGroup()
+      .offset(y: isHidden ? availableSize.height - 30 : 0)
+      .animation(.spring(response: 0.4, dampingFraction: 0.6), value: isHidden)
   }
 
   private var cameraEye: some View {
     HStack {
       Spacer()
-      if let currentCameraFrame = camera.currentCameraFrame {
+      if let currentCameraFrame = (camera.currentCameraFrame ?? .blackImage) {
         Image(decorative: currentCameraFrame, scale: 1)
           .resizable()
           .scaledToFill()
@@ -63,6 +78,21 @@ public struct CameraView: View {
         .frame(width: 36, height: 36)
         .foregroundStyle(.red)
         .background(Circle().fill(.white))
+    }
+    .buttonStyle(.plain)
+    .padding()
+  }
+
+  private var captureButton: some View {
+    Button(action: { self.capturedPicture = camera.currentCameraFrame }) {
+      Circle()
+        .fill(.white)
+        .overlay {
+          Circle()
+            .stroke(lineWidth: 3)
+            .padding(8)
+        }
+        .frame(width: 80, height: 80)
     }
     .buttonStyle(.plain)
     .padding()
