@@ -44,15 +44,17 @@ public struct CameraView: View {
   }
 
   private func cameraView(availableSize: CGSize) -> some View {
-    RoundedRectangle(cornerRadius: 16, style: .continuous)
-      .fill(.gray)
+//    RoundedRectangle(cornerRadius: 16, style: .continuous)
+//      .fill(.gray)
+    Image.kodakSkin
+      .resizable()
       .overlay {
         cameraEye
       }
       .overlay(alignment: .bottomTrailing) {
         closeButton
       }
-      .overlay(alignment: .bottomLeading) {
+      .overlay {
         captureButton
       }
       .overlay(alignment: .top) {
@@ -62,12 +64,11 @@ public struct CameraView: View {
       .drawingGroup()
       .scaleEffect(isCameraPresented ? 1 : 0.8, anchor: .top)
       .offset(y: isCameraPresented ? 0 : availableSize.height - 30)
-      .animation(.spring(response: 0.4, dampingFraction: 0.6), value: isCameraPresented)
+      .animation(.spring(response: 0.3, dampingFraction: 0.7), value: isCameraPresented)
   }
 
   private var cameraEye: some View {
-    HStack {
-      Spacer()
+    GeometryReader { proxy in
       if let currentCameraFrame = CGImage.blackImage {//(camera.currentCameraFrame ?? .blackImage) {
         Image(decorative: currentCameraFrame, scale: 1)
           .resizable()
@@ -75,61 +76,79 @@ public struct CameraView: View {
           .aspectRatio(57/83, contentMode: .fit)
           .frame(width: 80)
           .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+          .offset(
+            x: proxy.size.width * 0.68,
+            y: proxy.size.height * 0.38
+          )
       }
     }
-    .padding()
   }
 
   private var closeButton: some View {
-    Button(action: {
-      isCameraPresented = false
-      Task {
-//        camera.stopCapture()
+    GeometryReader { proxy in
+      Button(action: {
+        isCameraPresented = false
+        Task {
+          //        camera.stopCapture()
+        }
+      }) {
+        Image(systemName: "xmark.circle.fill")
+          .resizable()
+          .frame(width: 36, height: 36)
+          .foregroundStyle(.red)
+          .background(Circle().fill(.white))
       }
-    }) {
-      Image(systemName: "xmark.circle.fill")
-        .resizable()
-        .frame(width: 36, height: 36)
-        .foregroundStyle(.red)
-        .background(Circle().fill(.white))
+      .buttonStyle(.plain)
+      .offset(
+        x: proxy.size.width * 0.8,
+        y: proxy.size.height * 0.92
+      )
     }
-    .buttonStyle(.plain)
-    .padding()
   }
 
   private var captureButton: some View {
-    Button(action: { self.capturedPicture = .blackImage /*camera.currentCameraFrame*/ }) {
-      Circle()
-        .fill(.white)
-        .overlay {
-          Circle()
-            .stroke(lineWidth: 3)
-            .padding(8)
-        }
-        .frame(width: 80, height: 80)
+    GeometryReader { proxy in
+      Button(action: { self.capturedPicture = .blackImage /*camera.currentCameraFrame*/ }) {
+        Circle()
+          .fill(.white)
+          .overlay {
+            Circle()
+              .stroke(lineWidth: 3)
+              .padding(8)
+          }
+          .frame(width: 80, height: 80)
+      }
+      .buttonStyle(.plain)
+      .offset(
+        x: proxy.size.width * 0.1,
+        y: proxy.size.height * 0.8
+      )
     }
-    .buttonStyle(.plain)
-    .padding()
   }
 
   private var grabIndicator: some View {
-    Button(action: {
-      isCameraPresented = true
-      Task {
-//        await camera.startCapture()
-      }
-    }) {
-      RoundedRectangle(cornerRadius: 8, style: .continuous)
-        .fill(.gray)
-        .frame(width: 80, height: 40)
-        .overlay {
-          Image(systemName: "chevron.up")
-            .font(.system(size: 24, weight: .bold))
-            .foregroundStyle(.white)
+    GeometryReader { proxy in
+      Button(action: {
+        isCameraPresented = true
+        Task {
+          //        await camera.startCapture()
         }
+      }) {
+        RoundedRectangle(cornerRadius: 8, style: .continuous)
+          .fill(Color(cgColor: .init(red: 34/255, green: 24/255, blue: 24/255, alpha: 1)))
+          .frame(width: 80, height: 40)
+          .overlay {
+            Image(systemName: "chevron.up")
+              .font(.system(size: 24, weight: .bold))
+              .foregroundStyle(.white)
+          }
+      }
+      .buttonStyle(.plain)
+      .offset(
+        x: proxy.size.width * 0.48 - 80/2,
+        y: -proxy.size.height * 0.01
+      )
     }
-    .buttonStyle(.plain)
-    .offset(y: -20)
   }
 }
 

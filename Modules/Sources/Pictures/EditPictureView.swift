@@ -38,7 +38,7 @@ public struct EditPictureView: View {
             Text("Tap to edit text")
               .font(.title)
               .foregroundStyle(.gray)
-              .transition(.opacity.animation(.linear(duration: 0.2)))
+              .transition(.opacity.animation(.linear(duration: 0.1)))
           }
         }
         .onTapGesture {

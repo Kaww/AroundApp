@@ -66,8 +66,27 @@ public struct MapPicturesView: View {
     .onMapCameraChange(frequency: .onEnd, { context in
       print("Camera changed -> \(context.camera.centerCoordinate)")
     })
+    .overlay(alignment: .topTrailing) { profileButton }
     .overlay { pictureView }
     .ignoresSafeArea(.keyboard)
+  }
+
+  private var profileButton: some View {
+    Button(action: {}) {
+      Circle()
+        .fill(.white)
+        .shadow(color: .black.opacity(0.4), radius: 10)
+        .overlay {
+          Image.mockProfilePicture
+            .resizable()
+            .clipShape(Circle())
+            .padding(4)
+        }
+        .frame(width: 58, height: 58)
+        .padding()
+    }
+    .offset(x: selection == nil ? 0 : 100, y: selection == nil ? 0 : -100)
+    .animation(.spring(duration: 0.3), value: selection)
   }
 
   private var pictureView: some View {

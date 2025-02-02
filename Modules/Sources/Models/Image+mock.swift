@@ -10,4 +10,5 @@ import UIKit
 
 public extension Image {
   static let mockProfilePicture = Image(uiImage: UIImage(resource: .userTaytay))
+  static let kodakSkin = Image(uiImage: UIImage(resource: .kodakSkin))
 }
