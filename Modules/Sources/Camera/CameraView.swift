@@ -68,7 +68,7 @@ public struct CameraView: View {
   private var cameraEye: some View {
     HStack {
       Spacer()
-      if let currentCameraFrame = (camera.currentCameraFrame ?? .blackImage) {
+      if let currentCameraFrame = CGImage.blackImage {//(camera.currentCameraFrame ?? .blackImage) {
         Image(decorative: currentCameraFrame, scale: 1)
           .resizable()
           .scaledToFill()
@@ -84,7 +84,7 @@ public struct CameraView: View {
     Button(action: {
       isCameraPresented = false
       Task {
-        camera.stopCapture()
+//        camera.stopCapture()
       }
     }) {
       Image(systemName: "xmark.circle.fill")
@@ -98,7 +98,7 @@ public struct CameraView: View {
   }
 
   private var captureButton: some View {
-    Button(action: { self.capturedPicture = camera.currentCameraFrame }) {
+    Button(action: { self.capturedPicture = .blackImage /*camera.currentCameraFrame*/ }) {
       Circle()
         .fill(.white)
         .overlay {
@@ -116,7 +116,7 @@ public struct CameraView: View {
     Button(action: {
       isCameraPresented = true
       Task {
-        await camera.startCapture()
+//        await camera.startCapture()
       }
     }) {
       RoundedRectangle(cornerRadius: 8, style: .continuous)

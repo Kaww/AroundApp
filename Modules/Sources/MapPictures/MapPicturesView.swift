@@ -7,6 +7,7 @@
 
 import MapKit
 import Models
+import Pictures
 import SwiftUI
 
 public struct MapPicturesView: View {
@@ -17,14 +18,18 @@ public struct MapPicturesView: View {
     Picture(location: PictureLocation(latitude: 48.83301946969535, longitude: 2.2378371167000943), image: UIImage(), text: "")
   ]
 
-  @State private var selection: Picture?
+  @Binding private var selection: Picture?
   @State private var position: MapCameraPosition = .camera(
     .init(centerCoordinate: .paris, distance: 50000)
   )
 
   @State private var isFlipped = false
 
-  public init() {}
+  public init(
+    viewingPicture: Binding<Picture?>
+  ) {
+    self._selection = viewingPicture
+  }
 
   public var body: some View {
     Map(position: $position, bounds: MapCameraBounds(), interactionModes: [.pan, .zoom]) {
@@ -61,40 +66,46 @@ public struct MapPicturesView: View {
     .onMapCameraChange(frequency: .onEnd, { context in
       print("Camera changed -> \(context.camera.centerCoordinate)")
     })
-    .overlay {
+    .overlay { pictureView }
+    .ignoresSafeArea(.keyboard)
+  }
+
+  private var pictureView: some View {
+    ZStack {
+      Color.black
+        .ignoresSafeArea()
+        .opacity(selection == nil ? 0 : 0.4)
+        .onTapGesture {
+          selection = nil
+          isFlipped = false
+        }
+        .animation(.linear(duration: 0.1), value: selection)
       if let selection {
-        ZStack {
-          if isFlipped {
-            Text(selection.text)
-              .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))
-          } else {
-            Image(uiImage: selection.image)
-              .resizable()
-              .scaledToFit()
-              .frame(maxWidth: .infinity)
-              .clipShape(RoundedRectangle(cornerRadius: 5, style: .continuous))
-              .padding(10)
-          }
-        }
-        .frame(width: 300, height: 400)
-        .background(
-          RoundedRectangle(cornerRadius: 5, style: .continuous)
-            .fill(.white)
+        PictureView(
+          picture: selection,
+          showPhotoInfos: true,
+          isFlipped: isFlipped
         )
-        .onTapGesture { isFlipped.toggle() }
-        .onDisappear { isFlipped = false }
-        .rotation3DEffect(.degrees(isFlipped ? 180 : 0), axis: (x: 0, y: 1, z: 0), perspective: 0.5)
-        .animation(.spring, value: isFlipped)
-        .overlay(alignment: .topTrailing) {
-          Button(action: { self.selection = nil}) {
-            Text("Close")
-          }
+        .onTapGesture {
+          isFlipped.toggle()
         }
+        .onDisappear { isFlipped = false }
+        .padding(.horizontal, 32)
+        .transition(.opacity.combined(with: .scale(0.5)).combined(with: .move(edge: .bottom)))
       }
     }
+    .animation(.spring(duration: 0.3), value: selection)
+  }
+}
+
+private struct PreviewView: View {
+  @State private var viewingPicture: Picture? = nil
+
+  var body: some View {
+    MapPicturesView(viewingPicture: $viewingPicture)
   }
 }
 
 #Preview {
-  MapPicturesView()
+  PreviewView()
 }

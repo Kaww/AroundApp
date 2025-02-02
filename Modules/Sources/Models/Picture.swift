@@ -27,6 +27,10 @@ public struct Picture: Identifiable, Sendable, Equatable {
 }
 
 public extension Picture {
+
+  static let mock = Picture(location: .paris, image: UIImage(resource: .eiffel), text: "Waaa this is the Eiffel Tower!\nAmazing!! 🎉")
+  static let mockEmtpy = Picture(location: .home, image: UIImage(resource: .eiffel), text: "")
+
   static let famousPlaces = [
     Picture(
       location: PictureLocation(latitude: 48.8584, longitude: 2.2945),

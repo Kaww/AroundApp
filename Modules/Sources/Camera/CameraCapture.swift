@@ -21,10 +21,12 @@ import Foundation
   private var _currentCameraFrame: CGImage?
   public var currentCameraFrame: CGImage? {
     get {
-      frameQueue.sync { _currentCameraFrame }
+      _currentCameraFrame
+//      frameQueue.sync { _currentCameraFrame }
     }
     set {
-      frameQueue.sync { _currentCameraFrame = newValue }
+      _currentCameraFrame = newValue
+//      frameQueue.sync { _currentCameraFrame = newValue }
     }
   }
 

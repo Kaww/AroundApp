@@ -55,7 +55,8 @@ let package = Package(
     .target(
       name: "MapPictures",
       dependencies: [
-        "Models"
+        "Models",
+        "Pictures"
       ]
     ),
     .testTarget(
