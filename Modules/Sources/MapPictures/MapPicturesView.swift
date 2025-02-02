@@ -24,8 +24,7 @@ public struct MapPicturesView: View {
 
   @State private var isFlipped = false
 
-  public init() {
-  }
+  public init() {}
 
   public var body: some View {
     Map(position: $position, bounds: MapCameraBounds(), interactionModes: [.pan, .zoom]) {

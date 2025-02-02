@@ -8,6 +8,7 @@
 import Camera
 import MapPictures
 import Models
+import Pictures
 import SwiftUI
 
 public struct BaseAppView: View {
@@ -28,7 +29,7 @@ public struct BaseAppView: View {
         })
       }
       .sheet(item: $editingPicture) { picture in
-        Text(picture.text)
+        EditPictureView()
       }
   }
 }

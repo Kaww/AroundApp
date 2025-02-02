@@ -14,6 +14,7 @@ let package = Package(
     .library(name: "Camera", targets: ["Camera"]),
     .library(name: "MapPictures", targets: ["MapPictures"]),
     .library(name: "Models", targets: ["Models"]),
+    .library(name: "Pictures", targets: ["Pictures"]),
   ],
   dependencies: [],
   targets: [
@@ -25,7 +26,8 @@ let package = Package(
       dependencies: [
         "Camera",
         "MapPictures",
-        "Models"
+        "Models",
+        "Pictures"
       ]
     ),
     .testTarget(
@@ -72,6 +74,20 @@ let package = Package(
       name: "ModelsTests",
       dependencies: [
         "Models"
+      ]
+    ),
+
+    // MARK: - Pictures
+    .target(
+      name: "Pictures",
+      dependencies: [
+        "Models"
+      ]
+    ),
+    .testTarget(
+      name: "PicturesTests",
+      dependencies: [
+        "Pictures"
       ]
     )
   ]
