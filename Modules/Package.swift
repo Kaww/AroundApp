@@ -11,6 +11,7 @@ let package = Package(
   platforms: [.iOS(.v18)],
   products: [
     .library(name: "BaseApp", targets: ["BaseApp"]),
+    .library(name: "Camera", targets: ["Camera"]),
     .library(name: "MapPictures", targets: ["MapPictures"]),
     .library(name: "Models", targets: ["Models"]),
   ],
@@ -22,6 +23,7 @@ let package = Package(
     .target(
       name: "BaseApp",
       dependencies: [
+        "Camera",
         "MapPictures"
       ]
     ),
@@ -29,6 +31,18 @@ let package = Package(
       name: "BaseAppTests",
       dependencies: [
         "BaseApp"
+      ]
+    ),
+
+    // MARK: - Camera
+    .target(
+      name: "Camera",
+      dependencies: []
+    ),
+    .testTarget(
+      name: "CameraTests",
+      dependencies: [
+        "Camera"
       ]
     ),
 

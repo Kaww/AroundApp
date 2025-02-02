@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "2778AB5F-E5AB-434F-9211-EDF4DBD8CB35",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "CameraTests",
+        "name" : "CameraTests"
+      }
+    }
+  ],
+  "version" : 1
+}

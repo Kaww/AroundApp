@@ -5,6 +5,7 @@
 //  Created by KAWRANTIN on 01/02/2025.
 //
 
+import Camera
 import MapPictures
 import SwiftUI
 
@@ -14,6 +15,9 @@ public struct BaseAppView: View {
 
   public var body: some View {
     MapPicturesView()
+      .overlay {
+        CameraView()
+      }
   }
 }
 

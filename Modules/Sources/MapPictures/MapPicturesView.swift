@@ -60,7 +60,7 @@ public struct MapPicturesView: View {
     }
     .mapStyle(.standard(elevation: .flat, emphasis: .automatic, pointsOfInterest: .excludingAll, showsTraffic: false))
     .onMapCameraChange(frequency: .onEnd, { context in
-      print("Camera changed \(context.camera.centerCoordinate)")
+      print("Camera changed -> \(context.camera.centerCoordinate)")
     })
     .overlay {
       if let selection {
